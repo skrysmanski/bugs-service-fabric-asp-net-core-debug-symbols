@@ -1,0 +1,5 @@
+.vs/
+packages/
+*.user
+Web1/bin/
+Web1/obj/
