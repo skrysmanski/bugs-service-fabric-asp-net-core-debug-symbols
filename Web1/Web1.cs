@@ -14,7 +14,7 @@ using Microsoft.ServiceFabric.Services.Runtime;
 namespace Web1
 {
     /// <summary>
-    /// The FabricRuntime creates an instance of this class for each service type instance. 
+    /// The FabricRuntime creates an instance of this class for each service type instance.
     /// </summary>
     internal sealed class Web1 : StatelessService
     {
@@ -41,7 +41,6 @@ namespace Web1
                                             .AddSingleton<StatelessServiceContext>(serviceContext))
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseStartup<Startup>()
-                                    .UseApplicationInsights()
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url)
                                     .Build();
