@@ -1,18 +1,46 @@
-﻿using Microsoft.ServiceFabric.Services.Runtime;
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.Fabric;
 using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace Web1
 {
 	internal static class Program
 	{
+		public static bool IsServiceFabricAvailable
+		{
+			get
+			{
+				try
+				{
+					FabricRuntime.GetNodeContext();
+					return true;
+				}
+				catch (FabricException sfEx) when (sfEx.HResult == -2147017661 || sfEx.HResult == -2147017536 || sfEx.InnerException?.HResult == -2147017536)
+				{
+					return false;
+				}
+			}
+		}
+
 		/// <summary>
 		/// This is the entry point of the service host process.
 		/// </summary>
 		private static void Main()
 		{
+			if (!IsServiceFabricAvailable)
+			{
+				int iteration = 1;
+				while (true)
+				{
+					Console.WriteLine($"Iteration: {iteration}");
+					Debug.WriteLine($"Iteration: {iteration}");
+					iteration++;
+					Thread.Sleep(TimeSpan.FromSeconds(2));
+				}
+			}
+
 			try
 			{
 				// The ServiceManifest.XML file defines one or more service type names.
