@@ -24,6 +24,18 @@ namespace Web1
 			}
 		}
 
+		public static bool IsDebugBuild
+		{
+			get
+			{
+#if DEBUG
+				return true;
+#else
+				return false;
+#endif
+			}
+		}
+
 		/// <summary>
 		/// This is the entry point of the service host process.
 		/// </summary>
@@ -34,8 +46,9 @@ namespace Web1
 				int iteration = 1;
 				while (true)
 				{
-					Console.WriteLine($"Iteration: {iteration}");
-					Debug.WriteLine($"Iteration: {iteration}");
+					string logMessage = $"Iteration: {iteration} [Debug Build: {IsDebugBuild}]";
+					Console.WriteLine(logMessage);
+					Debug.WriteLine(logMessage);
 					iteration++;
 					Thread.Sleep(TimeSpan.FromSeconds(2));
 				}
